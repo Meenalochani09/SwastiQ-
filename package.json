@@ -1,0 +1,7 @@
+{
+  "name": "swastiq",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SwastiQ - voice-first community health register powered by Gnani Prisma and Timbre",
+  "engines": { "node": ">=20" }
+}
