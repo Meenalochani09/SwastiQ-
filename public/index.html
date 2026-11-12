@@ -1,0 +1,359 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SwastiQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--em:#1e4fa3;--em2:#163c7d;--teal:#0f7f95;--bg:#f4f6fa;--card:#fff;--tx:#16202e;--mu:#566377;--ln:#dde3ec;--red:#b3261e;--redbg:#fdeceb;--amb:#9a6200;--ambbg:#fff3d9;--ok:#1b7a43;--okbg:#e3f5e9;--r:16px}
+:root[data-theme=dark]{--bg:#0c1420;--card:#131d2c;--tx:#e6edf7;--mu:#93a4bb;--ln:#25344a;--redbg:#3a1a18;--ambbg:#3a2c0e;--okbg:#12301f;--em:#3d73e0;--em2:#2f5fc4;--teal:#3fb0c8;--red:#ff8a80}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{font-family:'Instrument Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.5;padding-top:env(safe-area-inset-top,0)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.app{display:flex;min-height:100%}
+nav.side{display:none;width:230px;background:var(--card);border-right:1px solid var(--ln);padding:20px 12px;position:sticky;top:0;height:100vh;flex-direction:column;gap:4px}
+nav.bot{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--ln);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0));z-index:20}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--mu);padding:6px 8px;min-width:56px;border-radius:12px;font-weight:500}
+.nb svg,.sl svg{width:22px;height:22px}
+.nb.on{color:var(--em);font-weight:700}
+.mic-fab{background:var(--em);color:#fff!important;border-radius:50%;width:56px;height:56px;margin-top:-22px;justify-content:center;box-shadow:0 6px 16px rgba(30,79,163,.35)}
+.sl{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;font-weight:500;color:var(--mu);text-align:left;width:100%}
+.sl.on{background:var(--em);color:#fff}
+.sl:hover:not(.on){background:var(--bg)}
+main{flex:1;min-width:0;padding:16px 16px 100px;max-width:1100px;margin:0 auto;width:100%}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-family:Fraunces,serif;font-weight:700;font-size:22px;color:var(--em)}
+.logo svg{width:34px;height:34px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;font-size:13px;font-weight:600;background:var(--okbg);color:var(--ok)}
+.pill.off{background:var(--ambbg);color:var(--amb)}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--okbg);color:var(--ok)}
+.chip.w{background:var(--ambbg);color:var(--amb)}.chip.d{background:var(--redbg);color:var(--red)}.chip.n{background:var(--bg);color:var(--mu);border:1px solid var(--ln)}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:var(--r);padding:16px}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(2,1fr)}.g4{grid-template-columns:repeat(2,1fr)}
+.stat b{font-family:Fraunces,serif;font-size:32px;display:block;color:var(--em)}.stat span{color:var(--mu);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;background:var(--em);color:#fff;font-weight:600}
+.btn:hover{background:var(--em2)}.btn.alt{background:var(--card);color:var(--em);border:2px solid var(--em)}.btn.red{background:var(--red)}.btn.sm{min-height:40px;padding:0 14px;font-size:14px}.btn:disabled{opacity:.45;cursor:not-allowed}
+input,select{width:100%;min-height:48px;padding:0 14px;border:1.5px solid var(--ln);border-radius:12px;background:var(--card)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.list>*{padding:12px 0;border-bottom:1px solid var(--ln)}.list>*:last-child{border:0}
+.mu{color:var(--mu);font-size:14px}
+.alertbar{background:var(--redbg);border:2px solid var(--red);border-radius:var(--r);padding:16px;animation:pop .35s}
+.alertbar h3{color:var(--red)}
+@keyframes pop{from{transform:scale(.97);opacity:0}}
+.hero{background:linear-gradient(160deg,#1e4fa3,#0f2f63);color:#fff;border-radius:24px;padding:28px 22px}
+.hero h1{font-size:clamp(28px,6vw,48px);margin-bottom:12px}.hero p{max-width:560px;opacity:.92;margin-bottom:20px}
+.hero .btn{background:#fff;color:var(--em)}.hero .btn.alt{background:transparent;color:#fff;border-color:#fff}
+.bub{padding:10px 14px;border-radius:16px;max-width:88%;margin:6px 0}
+.bub.u{background:var(--em);color:#fff;margin-left:auto;border-bottom-right-radius:4px}.bub.a{background:var(--bg);border:1px solid var(--ln);border-bottom-left-radius:4px}
+.micwrap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:10px 0}
+.micbtn{width:104px;height:104px;border-radius:50%;background:var(--em);color:#fff;display:grid;place-items:center;position:relative}
+.micbtn svg{width:44px;height:44px}
+.micbtn.on::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:3px solid var(--teal);animation:pulse 1.2s infinite}
+@keyframes pulse{to{transform:scale(1.3);opacity:0}}
+.wave{display:flex;gap:4px;align-items:center;height:40px}.wave i{width:5px;height:6px;border-radius:3px;background:var(--teal);transition:height .1s}
+.wave.on i{animation:wv .8s infinite ease-in-out}
+@keyframes wv{50%{height:36px}}
+.wave i:nth-child(2n){animation-delay:.15s}.wave i:nth-child(3n){animation-delay:.3s}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:8px 12px;font-size:15px}.kv dt{color:var(--mu)}.kv dd{font-weight:600;margin:0}
+.bars{display:flex;align-items:flex-end;gap:10px;height:130px}.bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:12px;color:var(--mu)}
+.bars div span{width:100%;background:var(--teal);border-radius:6px 6px 0 0;min-height:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--ln);white-space:nowrap}th{color:var(--mu);font-weight:600}
+.tw{overflow-x:auto}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}.tabs button{padding:8px 16px;border-radius:99px;border:1.5px solid var(--ln);background:var(--card);font-weight:600;white-space:nowrap}.tabs .on{background:var(--em);color:#fff;border-color:var(--em)}
+dialog{border:0;border-radius:20px;padding:22px;max-width:440px;width:calc(100% - 32px);background:var(--card);color:var(--tx)}dialog::backdrop{background:rgba(0,0,0,.5)}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:12px;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%}
+#toast.on{opacity:1}
+.view{animation:fade .25s}@keyframes fade{from{opacity:0}}
+.sk{background:linear-gradient(90deg,var(--ln),var(--bg),var(--ln));background-size:200%;animation:sh 1s infinite;height:70px;border-radius:12px}@keyframes sh{to{background-position:-200%}}
+.nb{position:relative}.btn,.nb,.sl,.ib,.micbtn,.tabs button{transition:transform .12s,background .15s,box-shadow .15s}.btn:active,.nb:active,.sl:active,.ib:active,.micbtn:active,.tabs button:active{transform:scale(.93)}.nb:hover{background:var(--bg)}
+.ib{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:var(--tx);background:var(--card);border:1px solid var(--ln);text-decoration:none}.ib:hover{background:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.12)}.ib svg{width:22px;height:22px}
+.bd{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;font-size:11px;font-style:normal;font-weight:700;border-radius:99px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px}
+.bar{display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}.bar a.logo{text-decoration:none}
+@media(min-width:900px){.bar .logo{display:none}.bar{justify-content:flex-end}nav.side{display:flex}nav.bot{display:none}main{padding:28px 32px}.g4{grid-template-columns:repeat(4,1fr)}.two{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start}}
+#live{position:fixed;top:calc(10px + env(safe-area-inset-top,0));left:50%;transform:translateX(-50%);width:min(560px,calc(100% - 20px));z-index:60;display:flex;flex-direction:column;gap:10px;max-height:80vh;overflow:auto}
+#live .alertbar{background:var(--card);box-shadow:0 12px 32px rgba(179,38,30,.35);animation:pop .35s,glow 2.4s .35s 3}
+@keyframes glow{50%{box-shadow:0 0 0 8px rgba(179,38,30,.35),0 12px 32px rgba(179,38,30,.35)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.pulse{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:12px}.ring{position:relative;width:112px;height:112px;flex:none}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}.ring circle{fill:none;stroke-width:9;stroke-linecap:round}.ring b{position:absolute;inset:0;display:grid;place-items:center;font:700 28px Fraunces,serif}
+.ecg{width:100%;max-width:260px;height:34px;color:var(--teal)}.ecg path{stroke-dasharray:260;stroke-dashoffset:260;animation:ecg 2.6s linear infinite}@keyframes ecg{to{stroke-dashoffset:-260}}
+.wards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;flex:1;min-width:240px}.wt{border-radius:12px;padding:10px 12px;border-left:5px solid var(--ok);background:var(--okbg);display:flex;flex-direction:column}.wt.w{border-color:var(--amb);background:var(--ambbg)}.wt.d{border-color:var(--red);background:var(--redbg)}.wt small{color:var(--mu)}
+</style>
+<div class="app">
+<nav class="side" aria-label="Main"><div class="logo" style="padding:0 8px 16px"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="20" cy="20" r="16" opacity=".35"/><path d="M8 20h4l3-8 5 16 4-12 2 4h6"/></svg>SwastiQ</div><div id="sidelinks" style="display:flex;flex-direction:column;gap:4px"></div></nav>
+<main id="main"></main></div>
+<nav class="bot" id="bot" aria-label="Main"></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="live" aria-live="assertive"></div>
+<dialog id="dlg"></dialog>
+<script>
+const $=s=>document.querySelector(s);
+const TODAY='2026-11-11';
+const IC={vol:'<path d="M11 5L6 9H2v6h4l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/>',wifi:'<path d="M2 9a15 15 0 0120 0M5 13a10 10 0 0114 0M8.5 16.5a5 5 0 017 0M12 20h.01"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>',bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/>',usr:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',home:'<path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>',dash:'<path d="M4 4h7v9H4zM13 4h7v5h-7zM13 11h7v9h-7zM4 15h7v5H4z"/>',mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',reg:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/>',ppl:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 7M22 20c0-3-2-5-4-5.5"/>',fu:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 16l2 2 4-4"/>',al:'<path d="M12 3l10 18H2zM12 10v5M12 18v.1"/>',rep:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>'};
+const svg=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+const NAV=[['home','Home','home'],['dash','Dashboard','dash'],['voice','Voice','mic'],['reg','Register','reg'],['ben','Beneficiaries','ppl'],['fu','Follow-ups','fu'],['alerts','Alerts','al'],['rep','Reports','rep'],['set','Settings','set']];
+const BOT=['dash','reg','voice','fu','alerts'];
+
+/* ---------- state (in-memory + localStorage when available) ---------- */
+const seed=()=>({
+ ben:[{id:'101',name:'Meena Devi',hh:'Devi household · Ward 2',age:'29 y',vacc:'Penta 3',next:'2026-11-14',st:'Reviewed',w:[52,53,53]},
+ {id:'102',name:'Priya Sharma',hh:'Sharma household · Ward 4',age:'26 y',vacc:'MR booster',next:'2026-12-05',st:'Needs review',w:[46,47,47]},
+ {id:'103',name:'Baby of Radhika',hh:'Nair household · Ward 1',age:'14 mo',vacc:'MR 2',next:'2026-11-09',st:'Reviewed',w:[9,9.4,9.8]},
+ {id:'104',name:'Anjali Rao',hh:'Rao household · Ward 3',age:'31 y',vacc:'None due',next:'2026-11-11',st:'Reviewed',w:[58,58,57]},
+ {id:'105',name:'Baby of Sunita',hh:'Das household · Ward 4',age:'3 mo',vacc:'Penta 1',next:'2026-11-18',st:'Needs review',w:[5.2,5.8,6.1]},
+ {id:'106',name:'Kavitha M.',hh:'Murugan household · Ward 2',age:'34 y',vacc:'Td',next:'2026-11-08',st:'Reviewed',w:[61,60,60]}],
+ visits:[{id:'V-1001',b:'102',date:'2026-11-04',type:'Household Visit',w:47,vacc:'Next month',next:'2026-12-05',st:'Needs review',aud:['04 Nov · Created by voice']},
+ {id:'V-1002',b:'101',date:'2026-11-05',type:'Household Visit',w:53,vacc:'None',next:'2026-11-14',st:'Reviewed',aud:['05 Nov · Created by voice','06 Nov · Reviewed']},
+ {id:'V-1003',b:'103',date:'2026-11-06',type:'Household Visit',w:9.8,vacc:'MR 2',next:'2026-11-09',st:'Reviewed',aud:['06 Nov · Created']},
+ {id:'V-1004',b:'106',date:'2026-11-07',type:'Household Visit',w:60,vacc:'Td',next:'2026-11-08',st:'Reviewed',aud:['07 Nov · Created']},
+ {id:'V-1005',b:'105',date:'2026-11-09',type:'Household Visit',w:6.1,vacc:'Penta 1',next:'2026-11-18',st:'Needs review',aud:['09 Nov · Created by voice']}],
+ fu:[{id:1,b:'103',date:'2026-11-09',st:'Pending'},{id:2,b:'106',date:'2026-11-08',st:'Pending'},{id:3,b:'104',date:'2026-11-11',st:'Pending'},{id:4,b:'101',date:'2026-11-14',st:'Pending'},{id:5,b:'105',date:'2026-11-18',st:'Pending'},{id:6,b:'102',date:'2026-12-05',st:'Pending'}],
+ alerts:[{id:1,v:'V-1005',b:'105',rule:'R2',sign:'Unable to feed reported',ack:false,ref:false,ts:'09 Nov'}],drafts:[],settings:{lang:'Auto Detect',name:'Lakshmi R.',notif:true,readback:true,offlineDrafts:true,save_tx:false},vseq:1006});
+let S;try{S=JSON.parse(localStorage.getItem('sq2')||'null')}catch(e){}S=S||seed();S.settings=Object.assign({sound:true,vol:40,style:'soft'},S.settings);var srv=false,gn={stt:false,tts:false},DID=(()=>{try{let d=localStorage.getItem('sqd');if(!d){d=crypto.randomUUID();localStorage.setItem('sqd',d)}return d}catch(e){return'anon-device'}})();
+const localSave=()=>{try{localStorage.setItem('sq2',JSON.stringify(S))}catch(e){}};
+const save=()=>{S._ts=Date.now();S._dirty=true;localSave();checkAlerts();push()};
+async function push(){paintStatus();if(!online||!S._dirty)return;const ts=S._ts;try{const r=await fetch('/api/state',{method:'PUT',headers:{'Content-Type':'application/json','X-Device-Id':DID},body:JSON.stringify({ts,json:JSON.stringify(S)})});srv=r.ok;if(r.ok&&S._ts===ts){S._dirty=false;localSave()}}catch(e){srv=false}paintStatus()}
+async function initCloud(){try{const r=await fetch('/api/state',{headers:{'X-Device-Id':DID}});if(!r.ok)throw 0;const d=await r.json();srv=true;if(d.json&&!S._dirty&&d.ts>(S._ts||0)){S=JSON.parse(d.json);S.settings=Object.assign({sound:true,vol:40,style:'soft'},S.settings);S._dirty=false;localSave();checkAlerts();render()}else if(!d.json||S._dirty){S._dirty=true;S._ts=S._ts||Date.now();await push()}}catch(e){srv=false}paintStatus();try{const j=await(await fetch('/api/status')).json();const ch=j.stt!==gn.stt||j.tts!==gn.tts;gn=j;if(ch&&route()=='voice'&&vs.st=='idle')render()}catch(e){}}
+function paintStatus(){const p=$('#cs');if(!p)return;p.textContent=!online?'Offline · saved on device':S._dirty?'Waiting to sync':srv?'Synced to server':'Saved on device';p.className='pill'+(!online||S._dirty||!srv?' off':'');const lv=$('#lv');if(lv){lv.textContent=liveOK?'Live alerts on':'Live alerts off';lv.className='pill'+(liveOK?'':' off')}paintSnd()}
+let online=navigator.onLine!==false,filt={q:'',fu:'Today'},vs={st:'idle',tx:'',ex:null,log:[],lang:'Auto Detect'},seedTimer;
+const ben=id=>S.ben.find(b=>b.id==id);
+const fmt=d=>new Date(d+'T00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800)}
+function ask(title,html,okLabel,cb){const d=$('#dlg');d.innerHTML=`<h3>${title}</h3><div style="margin:12px 0">${html}</div><div class="row" style="justify-content:flex-end"><button class="btn alt sm" id="dn">Cancel</button><button class="btn sm" id="dy">${okLabel}</button></div>`;d.showModal();d.onclick=e=>{if(e.target===d)d.close()};$('#dn').onclick=()=>d.close();$('#dy').onclick=()=>{const r=cb(d);if(r!==false)d.close()}}
+
+/* ---------- rule-based danger-sign engine (separate from any LLM) ----------
+   DEMO RULES ONLY: verify each against the cited public guideline (e.g. NHM HBNC / IMNCI danger signs) before real use. */
+const RULES=[{id:'R1',re:/convuls|fits|seizure/i,sign:'Convulsions reported'},{id:'R2',re:/not feeding|unable to feed|not able to feed|stopped feeding/i,sign:'Unable to feed reported'},{id:'R3',re:/unconscious|not responding|unresponsive/i,sign:'Unconscious / not responding reported'},{id:'R4',re:/heavy bleeding|bleeding heavily/i,sign:'Heavy bleeding reported'}];
+const dangerScan=t=>RULES.filter(r=>r.re.test(t));
+
+/* ---------- extraction + validation (dev-mode regex stand-in for the LLM step) ---------- */
+const MONTHS=['january','february','march','april','may','june','july','august','september','october','november','december'];
+function extract(t){
+ const id=(t.match(/beneficiary\s*(?:number\s*)?(\d+)/i)||[])[1]||null;
+ let w=(t.match(/(\d+(?:\.\d+)?)\s*(?:kg|kilo)/i)||t.match(/weight\s*(?:is\s*)?(\d+(?:\.\d+)?)/i)||[])[1];w=w?parseFloat(w):null;
+ let next=null;const m=t.match(new RegExp('next visit[^.]*?('+MONTHS.join('|')+')\\s*(\\d{1,2})','i'));
+ if(m){const mo=MONTHS.indexOf(m[1].toLowerCase());let y=2026;if(mo<10)y=2027;next=`${y}-${String(mo+1).padStart(2,'0')}-${String(m[2]).padStart(2,'0')}`}
+ const vacc=/vaccin\w*[^.]*next month/i.test(t)?['Next month']:[];
+ const issues=[];if(!id)issues.push('Beneficiary ID not heard');else if(!ben(id))issues.push(`No beneficiary with ID ${id}`);
+ if(w!=null&&(w<1||w>150))issues.push('Weight looks out of range');
+ return{id,type:'Household Visit',w,vacc,next,issues,danger:dangerScan(t)};
+}
+const SAMPLES={'English':'Visited beneficiary 102 today. Weight is 48 kilograms. Vaccination is due next month. Next visit on December 5.','Tamil':'Beneficiary 104 ah visit panninen. Weight 52 kilograms. Next visit December 12.','Hindi':'Beneficiary 103 ka visit complete hua. Weight 10 kilogram hai. Next visit December 9.','Danger demo':'Visited beneficiary 105. Baby has convulsions. Weight is 6 kilograms. Next visit November 20.'};
+const LANGS=['Auto Detect','Tamil','Hindi','Telugu','Kannada','Malayalam','Bengali','Marathi','Gujarati','English'];
+
+/* ---------- views ---------- */
+const stat=(n,l)=>`<div class="card stat"><b>${n}</b><span>${l}</span></div>`;
+const overdue=()=>S.fu.filter(f=>f.st=='Pending'&&f.date<TODAY);
+function Home(){return`<div class="view"><div class="top"><div class="logo"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="20" cy="20" r="16" opacity=".35"/><path d="M8 20h4l3-8 5 16 4-12 2 4h6"/></svg>SwastiQ</div></div>
+<section class="hero"><h1>Your Voice Can Transform Community Healthcare.</h1><p>SwastiQ empowers ASHA workers to record field visits, organise follow-ups and respond to predefined danger signs through multilingual voice technology.</p><div class="row"><a class="btn" href="#voice">Try Voice Assistant</a><a class="btn alt" href="#dash">Explore Platform</a></div></section>
+<div class="grid g2" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+<div class="card"><h3>The problem</h3><p class="mu" style="margin-top:6px">Paper registers are slow to fill, hard to correct and easy to lose. Follow-ups slip and danger signs can be missed.</p></div>
+<div class="card"><h3>The solution</h3><p class="mu" style="margin-top:6px">Speak the visit. SwastiQ turns it into a record, reads it back, saves after you confirm, and flags predefined danger signs.</p></div></div>
+<div class="card" style="margin-top:16px"><h3>How it works</h3><div class="grid" style="margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div><b>1. Speak</b><p class="mu">Tap the microphone and describe the visit in your language.</p></div><div><b>2. Check</b><p class="mu">Review the record card. Correct any field by voice.</p></div><div><b>3. Confirm</b><p class="mu">Nothing is saved until you confirm.</p></div><div><b>4. Follow up</b><p class="mu">Next visits appear in your tracker automatically.</p></div></div></div>
+
+<div class="card" style="margin-top:16px"><h3>Powered by Gnani voice AI</h3><p class="mu" style="margin-top:6px">Gnani Prisma understands speech in Tamil, Hindi, Telugu, Kannada, Malayalam, Bengali, Marathi, Gujarati and English, even when languages are mixed in one sentence. Gnani Timbre then reads each record back to you in a natural voice. Nothing is saved until you confirm, and every record keeps an audit trail.</p><a class="btn" style="margin-top:12px" href="#voice">Start a voice visit</a></div></div>`}
+function Pulse(){const od=overdue().length,al=S.alerts.filter(a=>!a.ack).length,rv=S.visits.filter(v=>v.st=='Needs review').length,sc=Math.max(0,Math.min(100,100-od*12-al*15-rv*4)),C=2*Math.PI*46,col=sc>=75?'var(--ok)':sc>=50?'var(--amb)':'var(--red)',lab=sc>=75?'Steady':sc>=50?'Needs attention':'Act today',W={};
+ S.ben.forEach(b=>{const k=(b.hh.match(/Ward\s*(\d+)/)||[,'?'])[1],w=W[k]=W[k]||{n:0,o:0,a:0};w.n++;w.o+=S.fu.filter(f=>f.b==b.id&&f.st=='Pending'&&f.date<TODAY).length;w.a+=S.alerts.filter(x=>x.b==b.id&&!x.ack).length});
+ return`<div class="card pulse"><div class="ring" role="img" aria-label="Community pulse ${sc} out of 100"><svg viewBox="0 0 112 112"><circle cx="56" cy="56" r="46" stroke="var(--ln)"/><circle cx="56" cy="56" r="46" stroke="${col}" stroke-dasharray="${C*sc/100} ${C}"/></svg><b>${sc}</b></div>
+<div style="min-width:150px"><h3>Community pulse</h3><p class="mu">${lab}. Based on overdue follow-ups, open alerts and records to review.</p><svg class="ecg" viewBox="0 0 260 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M0 20h60l8-14 10 28 8-14h50l8-10 10 20 8-10h40"/></svg></div>
+<div class="wards">${Object.keys(W).sort().map(k=>{const w=W[k];return`<div class="wt ${w.a?'d':w.o?'w':''}"><b>Ward ${k}</b><span>${w.n} ${w.n>1?'people':'person'}</span><small>${w.a?w.a+' alert':w.o?w.o+' overdue':'All on track'}</small></div>`}).join('')}</div></div>`}
+function spark(a){if(a.length<2)return'';const mn=Math.min(...a),mx=Math.max(...a),r=mx-mn||1,p=a.map((v,i)=>[6+i*(228/(a.length-1)),50-(v-mn)/r*42]),l=p[p.length-1],df=(a[a.length-1]-a[0]).toFixed(1);return`<svg viewBox="0 0 240 56" style="width:100%;max-width:280px;color:var(--teal)" role="img" aria-label="Weight trend"><polyline points="${p.map(q=>q.join(',')).join(' ')}" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${l[0]}" cy="${l[1]}" r="5" fill="var(--em)"/></svg><p class="mu">${df>0?'+':''}${df} kg since first record</p>`}
+function Dash(){const due=S.fu.filter(f=>f.st=='Pending'&&f.date==TODAY),rev=S.visits.filter(v=>v.st=='Needs review').length,act=S.alerts.filter(a=>!a.ack);
+ const days=['Thu','Fri','Sat','Sun','Mon','Tue','Wed'],dates=[5,6,7,8,9,10,11].map(d=>`2026-11-${String(d).padStart(2,'0')}`),c=dates.map(d=>S.visits.filter(v=>v.date==d).length),mx=Math.max(...c,1);
+ return`<div class="view"><div class="top"><div><h2>Good morning, ${esc(S.settings.name)}</h2><p class="mu">${new Date(TODAY).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div></div>
+
+<div class="grid g4">${stat(S.ben.length,'Total beneficiaries')}${stat(due.length,"Today’s visits")}${stat(overdue().length+due.length,'Follow-ups due')}${stat(rev,'Records to review')}</div>${Pulse()}
+<a class="btn" style="width:100%;margin:14px 0;min-height:60px;font-size:18px" href="#voice">${svg('mic').replace('<svg','<svg width="26" height="26"')} Record a visit by voice</a>
+<div class="two"><div class="card"><h3>Today’s schedule</h3><div class="list">${due.map(f=>{const b=ben(f.b);return`<div class="row sp"><div><b>${esc(b.name)}</b><div class="mu">ID ${b.id} · ${esc(b.hh)}</div></div><button class="btn sm" data-act="done" data-id="${f.id}">Mark done</button></div>`}).join('')||'<p class="mu">No visits scheduled today.</p>'}</div></div>
+<div class="card" style="margin-top:12px"><h3>Weekly visit activity</h3><div class="bars" style="margin-top:12px">${c.map((n,i)=>`<div><small>${n}</small><span style="height:${n/mx*100}%"></span>${days[i]}</div>`).join('')}</div></div></div>
+<div class="card" style="margin-top:12px"><h3>Recent visit records</h3><div class="list">${S.visits.slice(-3).reverse().map(v=>`<div class="row sp"><div><b>${v.id}</b> · ID ${v.b}<div class="mu">${fmt(v.date)} · ${v.w} kg</div></div><span class="chip ${v.st=='Reviewed'?'':'w'}">${v.st}</span></div>`).join('')}</div></div></div>`}
+
+function Voice(){const st={idle:'Ready',listening:'Listening',transcribing:'Transcribing',understanding:'Understanding',confirm:'Awaiting confirmation',saved:'Saved successfully',clarify:'Needs clarification',draft:'Offline draft'}[vs.st];const ex=vs.ex;
+ return`<div class="view"><div class="top"><h2>Voice assistant</h2><select aria-label="Language" id="vlang" style="width:auto">${LANGS.map(l=>`<option ${l==vs.lang?'selected':''}>${l}</option>`).join('')}</select></div>
+${gn.stt?'<div class="card" style="border-color:var(--ok);background:var(--okbg);margin-bottom:12px"><b>Live voice.</b> Speech is recognised by Gnani Prisma v3.0. Read-back is spoken by Gnani Timbre v2.5.</div>':'<div class="card" style="border-color:var(--teal);margin-bottom:12px"><b>How to speak a visit.</b> Say the beneficiary ID, the weight and the next visit date, for example: “Beneficiary 102, weight 48 kilograms, next visit December 5.” Speak in any language you are comfortable with.</div>'}
+<div class="two"><div><div class="card micwrap"><button class="micbtn ${vs.st=='listening'?'on':''}" id="mic" aria-label="${vs.st=='listening'?'Stop recording':'Start recording'}">${svg('mic')}</button><div class="wave ${vs.st=='listening'?'on':''}" aria-hidden="true">${'<i></i>'.repeat(18)}</div><span class="chip ${vs.st=='clarify'?'d':vs.st=='confirm'||vs.st=='draft'?'w':''}">${st}</span>
+<p class="mu" style="text-align:center">${vs.st=='idle'?(gn.stt?'Tap the microphone and speak. It stops after a pause, or tap again.':'Tap the microphone, then pick a sample to “speak”.'):''}</p>
+${vs.st=='idle'&&!gn.stt?`<div class="row" style="justify-content:center">${Object.keys(SAMPLES).map(k=>`<button class="btn alt sm" data-act="say" data-k="${k}">${k}</button>`).join('')}</div>`:''}</div>
+<div class="card" style="margin-top:12px"><h3>Conversation</h3><div id="log" aria-live="polite">${vs.tx?`<div class="bub u">${esc(vs.tx)}</div>`:''}${vs.log.map(m=>`<div class="bub ${m.r}">${esc(m.t)}</div>`).join('')||(vs.tx?'':'<p class="mu">Your conversation will appear here.</p>')}</div></div></div>
+<div>${ex?`<div class="card"><h3>Visit record preview</h3><dl class="kv" style="margin-top:12px"><dt>Beneficiary ID</dt><dd>${ex.id||'—'} ${ex.id&&ben(ex.id)?'· '+esc(ben(ex.id).name):''}</dd><dt>Visit type</dt><dd>${ex.type}</dd><dt>Weight</dt><dd>${ex.w!=null?ex.w+' kg':'—'}</dd><dt>Vaccinations due</dt><dd>${ex.vacc.join(', ')||'—'}</dd><dt>Next visit</dt><dd>${ex.next?fmt(ex.next):'—'}</dd></dl>
+${ex.issues.length?`<p class="chip d" style="margin-top:12px">${ex.issues.join('; ')}. Please clarify.</p>`:''}
+${ex.danger.length?`<div class="alertbar" style="margin-top:12px"><h3>Danger sign reported</h3>${ex.danger.map(d=>`<p><b>${d.sign}</b> (rule ${d.id})</p>`).join('')}<p><b>Refer to the PHC immediately.</b></p></div>`:''}
+${vs.st=='confirm'||vs.st=='clarify'?`<div style="margin-top:14px"><label class="mu" for="corr">Correct by voice (sample) or type</label><div class="row" style="margin-top:6px"><input id="corr" placeholder="e.g. No, 46"><button class="btn sm" data-act="corr">Apply</button></div><div class="row" style="margin-top:8px">${gn.stt?'<button class="btn alt sm" data-act="corrmic">Speak correction</button>':'<button class="btn alt sm" data-act="corrs">Say “No, 46”</button>'}${gn.tts?'<button class="btn alt sm" data-act="speak">Read back</button>':''}<button class="btn alt sm" data-act="retry">Retry</button></div></div>
+<button class="btn" style="width:100%;margin-top:14px" data-act="confirm" ${ex.issues.length?'disabled':''}>Confirm and save</button>`:''}
+${vs.st=='saved'||vs.st=='draft'?`<button class="btn" style="width:100%;margin-top:14px" data-act="new">Record another visit</button>`:''}</div>`:`<div class="card"><h3>Visit record preview</h3><p class="mu" style="margin-top:6px">The extracted record appears here after you speak.</p></div>`}</div></div></div>`}
+
+function Ben(){const q=filt.q.toLowerCase(),L=S.ben.filter(b=>!q||b.id.includes(q)||b.name.toLowerCase().includes(q));
+ return`<div class="view"><div class="top"><h2>Beneficiaries</h2></div><input id="q" placeholder="Search by ID or name" aria-label="Search beneficiaries" value="${esc(filt.q)}" style="margin-bottom:12px">
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">${L.map(b=>`<div class="card"><div class="row sp"><b>${esc(b.name)}</b><span class="chip ${b.st=='Reviewed'?'':'w'}">${b.st}</span></div><div class="mu">ID ${b.id} · ${b.age}</div><div class="mu">${esc(b.hh)}</div><p style="margin:8px 0">Next visit <b>${fmt(b.next)}</b><br>Vaccination: ${b.vacc}</p><button class="btn alt sm" data-act="prof" data-id="${b.id}">View history</button></div>`).join('')||'<p class="mu">No match. Check the ID or try the name.</p>'}</div></div>`}
+function Reg(){const q=filt.q.toLowerCase(),L=S.visits.filter(v=>!q||v.b.includes(q)||v.id.toLowerCase().includes(q)).slice().reverse();
+ return`<div class="view"><div class="top"><h2>Digital field register</h2><button class="btn sm" data-act="export">Export CSV</button></div><input id="q" placeholder="Search visit or beneficiary ID" aria-label="Search register" value="${esc(filt.q)}" style="margin-bottom:12px"><div class="card tw"><table><thead><tr><th>Visit</th><th>ID</th><th>Date</th><th>Weight</th><th>Vaccine due</th><th>Next visit</th><th>Status</th><th></th></tr></thead><tbody>${L.map(v=>`<tr><td>${v.id}${S.alerts.some(a=>a.v==v.id)?' <span class="chip d">Alert</span>':''}</td><td>${v.b}</td><td>${fmt(v.date)}</td><td>${v.w} kg</td><td>${esc(v.vacc)}</td><td>${fmt(v.next)}</td><td><span class="chip ${v.st=='Reviewed'?'':'w'}">${v.st}</span></td><td><button class="btn alt sm" data-act="vis" data-id="${v.id}">Details</button></td></tr>`).join('')}</tbody></table></div></div>`}
+function Fu(){const t=filt.fu,P=S.fu.filter(f=>f.st=='Pending'),m={Today:P.filter(f=>f.date==TODAY),Upcoming:P.filter(f=>f.date>TODAY),Overdue:P.filter(f=>f.date<TODAY),Completed:S.fu.filter(f=>f.st=='Completed')},L=m[t];
+ return`<div class="view"><div class="top"><h2>Follow-up tracker</h2></div><div class="tabs" role="tablist">${Object.keys(m).map(k=>`<button class="${k==t?'on':''}" data-act="tab" data-k="${k}" role="tab">${k} (${m[k].length})</button>`).join('')}</div><div class="card"><div class="list">${L.map(f=>{const b=ben(f.b);return`<div class="row sp"><div><b>${esc(b.name)}</b><div class="mu">ID ${b.id} · ${fmt(f.date)} ${f.date<TODAY&&f.st=='Pending'?'<span class="chip d">Overdue</span>':''}</div></div>${f.st=='Pending'?`<div class="row"><button class="btn sm" data-act="done" data-id="${f.id}">Mark done</button><button class="btn alt sm" data-act="resch" data-id="${f.id}">Reschedule</button></div>`:'<span class="chip">Completed</span>'}</div>`}).join('')||'<p class="mu">Nothing here. Visits you schedule by voice will appear in this list.</p>'}</div></div></div>`}
+function Alerts(){const A=S.alerts.slice().reverse(),act=A.filter(a=>!a.ack);
+ return`<div class="view"><div class="top"><h2>Smart alert centre</h2><button class="btn alt sm" data-act="tsnd">Test alert sound</button></div><p class="mu" style="margin-bottom:12px">Alerts come from fixed rules, not AI. SwastiQ does not diagnose or advise treatment.</p>
+${act.map(a=>`<div class="alertbar" style="margin-bottom:12px"><h3>${a.sign}</h3><p>Visit ${a.v} · Beneficiary ${a.b} · Rule ${a.rule}</p><p style="margin:8px 0"><b>Refer this beneficiary to the PHC immediately.</b></p><button class="btn red" data-act="ack" data-id="${a.id}">I have seen this alert</button></div>`).join('')||'<div class="card"><p>No active alerts. Alerts appear here when a worker reports a predefined danger sign.</p></div>'}
+${RA.length?`<h3 style="margin:16px 0 8px">Live alerts from other workers</h3>${RA.map(a=>`<div class="alertbar" style="margin-bottom:12px"><h3>${esc(a.sign)}</h3><p>${esc(a.worker||'Another worker')} · Visit ${esc(a.v)} · Beneficiary ${esc(a.b)} · Rule ${esc(a.rule)}</p><p style="margin:8px 0"><b>Refer to the PHC immediately.</b></p><button class="btn alt sm" data-act="rdis" data-id="${esc(a.id)}">Dismiss</button></div>`).join('')}`:''}
+<h3 style="margin:16px 0 8px">Alert history</h3><div class="card"><div class="list">${A.filter(a=>a.ack).map(a=>`<div class="row sp"><div><b>${a.sign}</b><div class="mu">Visit ${a.v} · ID ${a.b} · ${a.ts}</div></div><div>${a.ref?'<span class="chip">Referral confirmed</span>':`<button class="btn alt sm" data-act="ref" data-id="${a.id}">Confirm referral made</button>`}</div></div>`).join('')||'<p class="mu">Acknowledged alerts will be listed here.</p>'}</div></div>
+<details class="card" style="margin-top:12px"><summary><b>Rules in this demo</b></summary><p class="mu" style="margin:8px 0">Demo rules. Verify against the public guideline you cite (e.g. NHM HBNC/IMNCI) before real use.</p>${RULES.map(r=>`<p>${r.id}: ${r.sign}</p>`).join('')}</details></div>`}
+function Rep(){const V=S.visits,P=S.fu.filter(f=>f.st=='Pending').length,D=S.fu.filter(f=>f.st=='Completed').length,Rv=V.filter(v=>v.st=='Reviewed').length,mx=Math.max(P,D,1);
+ return`<div class="view"><div class="top"><h2>Reports</h2></div><div class="grid g4">${stat(V.length,'Total visits')}${stat(D,'Follow-ups completed')}${stat(P,'Pending follow-ups')}${stat(new Set(V.map(v=>v.b)).size,'Beneficiaries visited')}${stat(V.filter(v=>/month|MR|Penta|Td/i.test(v.vacc)).length,'Vaccination follow-ups')}${stat(S.alerts.filter(a=>a.ref).length,'Referrals confirmed')}${stat(Rv,'Records reviewed')}${stat(V.length-Rv,'Records to review')}</div>
+<div class="card" style="margin-top:12px"><h3>Follow-up status</h3><div class="bars" style="margin-top:12px"><div><small>${P}</small><span style="height:${P/mx*100}%"></span>Pending</div><div><small>${D}</small><span style="height:${D/mx*100}%;background:var(--em)"></span>Done</div><div><small>${overdue().length}</small><span style="height:${overdue().length/mx*100}%;background:var(--red)"></span>Overdue</div></div></div><p class="mu" style="margin-top:10px">Field-record counts only. These are not clinical predictions.</p></div>`}
+function Set(){const s=S.settings;
+ return`<div class="view"><div class="top"><h2>Settings</h2></div><div class="card grid"><label>Worker name<input id="sn" value="${esc(s.name)}"></label><label>Language<select id="sl">${LANGS.map(l=>`<option ${l==s.lang?'selected':''}>${l}</option>`).join('')}</select></label>
+${[['notif','Desktop notification when app is in background'],['sound','Alert sound and spoken alerts'],['readback','Read-back before saving'],['offlineDrafts','Save offline drafts'],['save_tx','Keep original transcript (off by default)']].map(([k,l])=>`<label class="row sp"><span>${l}</span><input type="checkbox" data-k="${k}" ${s[k]?'checked':''} style="width:28px;min-height:28px"></label>`).join('')}
+<label>Alert sound style<select id="ss">${[['soft','Soft chime'],['bell','Calm bell'],['pulse','Gentle pulse']].map(([k,l])=>`<option value="${k}" ${k==s.style?'selected':''}>${l}</option>`).join('')}</select></label><label>Alert volume<input type="range" id="sv" min="10" max="100" value="${s.vol}" style="accent-color:var(--teal)"></label>
+<div class="row"><button class="btn alt sm" data-act="tsnd">Test alert sound</button><button class="btn alt sm" data-act="nperm">Allow desktop notifications</button></div><button class="btn" data-act="saveset">Save settings</button></div>
+<div class="card grid" style="margin-top:12px"><h3>Your data</h3><button class="btn alt" data-act="export">Export register (CSV)</button><button class="btn red" data-act="wipe">Delete all data</button></div></div>`}
+const VIEWS={home:Home,dash:Dash,voice:Voice,reg:Reg,ben:Ben,fu:Fu,alerts:Alerts,rep:Rep,set:Set};
+
+/* ---------- render ---------- */
+let RT=location.hash.slice(1)||'home';function route(){return RT}
+function go(h){RT=h||'home';try{history.replaceState(null,'','#'+RT)}catch(e){try{location.hash=RT}catch(_){}}filt.q='';window.scrollTo(0,0);render()}
+function AppBar(){const n=S.alerts.filter(a=>!a.ack).length+RA.length+overdue().length;return`<header class="bar"><a class="logo" href="#home" aria-label="SwastiQ home">SwastiQ</a><span class="row" style="gap:6px"><span class="pill" id="cs"></span><span class="pill off" id="lv"></span></span><div class="row" style="gap:8px"><button class="ib" id="sndb" data-act="snd" aria-label="Alert sound">${svg('vol')}</button><button class="ib" data-act="net" aria-label="${online?'Simulate going offline':'Go back online'}" title="Simulate offline" style="${online?'':'color:var(--amb)'}">${svg('wifi')}</button><button class="ib" data-act="theme" aria-label="Switch light or dark theme">${svg('sun')}</button><button class="ib" data-act="bell" aria-label="Notifications">${svg('bell')}${n?`<i class="bd">${n}</i>`:''}</button><a class="ib" href="#set" aria-label="Profile and settings">${svg('usr')}</a></div></header>`}
+function Banner(){const a=S.alerts.filter(x=>!x.ack);if(!a.length)return'';const l=a[a.length-1];return`<a class="alertbar" href="#alerts" role="alert" style="display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;margin-bottom:14px"><span style="color:var(--red)">${svg('al').replace('<svg','<svg width="32" height="32"')}</span><span><b>${a.length} danger-sign alert${a.length>1?'s':''}: refer to the PHC immediately</b><br><span class="mu">${esc(l.sign)} · Beneficiary ${l.b}. Tap to review.</span></span></a>`}
+function alertPop(){const a=S.alerts.filter(x=>!x.ack);if(!a.length)return;ask('Danger-sign alert',a.map(x=>`<p><b>${x.sign}</b><br><span class="mu">Visit ${x.v} · Beneficiary ${x.b} · Rule ${x.rule}</span></p>`).join('')+'<p style="margin-top:8px"><b>Refer to the PHC immediately.</b></p>','Open alerts',()=>{go('alerts')});$('#dn').textContent='Later'}
+function render(){const r=VIEWS[route()]?route():'home';$('#main').innerHTML=(r=='home'?'':AppBar()+Banner())+VIEWS[r]();paintStatus();paintLive();
+ $('#sidelinks').innerHTML=NAV.map(([k,l,i])=>`<a class="sl ${k==r?'on':''}" href="#${k}" style="text-decoration:none">${svg(i)}${l}${k=='alerts'&&S.alerts.some(a=>!a.ack)?' <span class="chip d">!</span>':''}</a>`).join('');
+ $('#bot').innerHTML=BOT.map(k=>{const[,l,i]=NAV.find(n=>n[0]==k);return`<a class="nb ${k=='voice'?'mic-fab':''} ${k==r?'on':''}" href="#${k}" style="text-decoration:none" aria-label="${l}">${svg(i)}${k=='voice'?'':l}${k=='alerts'&&S.alerts.some(a=>!a.ack)?'<i class="bd">!</i>':''}</a>`}).join('')}
+addEventListener('hashchange',()=>{const h=location.hash.slice(1)||'home';if(h!=RT){RT=h;window.scrollTo(0,0);filt.q='';render()}});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented||e.ctrlKey||e.metaKey)return;e.preventDefault();go(a.getAttribute('href').slice(1))});
+
+/* ---------- voice flow ---------- */
+const say=t=>{vs.log.push({r:'a',t});}
+function runSample(k){vs.tx='';vs.ex=null;vs.log=[];vs.st='listening';render();const full=SAMPLES[k]+'',words=full.split(' ');let i=0;
+ seedTimer=setInterval(()=>{i++;vs.tx=words.slice(0,i).join(' ');const el=$('#log');if(el)el.innerHTML=`<div class="bub u">${esc(vs.tx)}</div>`;if(i>=words.length){clearInterval(seedTimer);vs.st='transcribing';render();setTimeout(()=>{vs.st='understanding';render();setTimeout(()=>finish(),600)},500)}},170)}
+function finish(){const ex=vs.ex=extract(vs.tx);
+ if(ex.issues.length){vs.st='clarify';say('I need clarification: '+ex.issues.join('; ')+'. Please say it again.')}
+ else{vs.st='confirm';say(`I heard: beneficiary ${ex.id}, weight ${ex.w??'not given'} kilograms, next visit ${ex.next?fmt(ex.next):'not given'}. Is this correct?`)}
+ if(ex.danger.length)say('Danger sign reported. Refer to the PHC immediately. This will be flagged when you save.');render();if(vs.st=='confirm'&&S.settings.readback)speakRecord()}
+function correct(txt){const ex=vs.ex;if(!ex)return;const n=txt.match(/(\d+(?:\.\d+)?)/);
+ if(!n){say('I could not find a number. Which field should I change?');vs.st='clarify';return render()}
+ const m=txt.match(new RegExp('('+MONTHS.join('|')+')\\s*(\\d{1,2})','i'));
+ if(m||/next visit|date/i.test(txt)){say('Please say the full date, for example “December 5”.');return render()}
+ const old=ex.w;ex.w=parseFloat(n[1]);ex.issues=ex.issues.filter(i=>!/Weight/.test(i));if(ex.w<1||ex.w>150)ex.issues.push('Weight looks out of range');
+ vs.log.push({r:'u',t:txt});say(`Updated weight from ${old} to ${ex.w} kilograms. Please confirm.`);vs.st=ex.issues.length?'clarify':'confirm';vs.audit=(vs.audit||[]);vs.audit.push(`Weight ${old}→${ex.w} (voice correction)`);render();if(vs.st=='confirm'&&S.settings.readback)speakRecord()}
+function commit(){const ex=vs.ex,id='V-'+(S.vseq++),ts=new Date(TODAY).toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+ const key=ex.id+'|'+TODAY+'|'+ex.w;
+ if(S.visits.some(v=>v.b==ex.id&&v.date==TODAY&&v.w==ex.w)){say('A matching record already exists for today. Not saved again.');toast('Duplicate prevented');return render()}
+ const rec={id,b:ex.id,date:TODAY,type:ex.type,w:ex.w,vacc:ex.vacc.join(', ')||'None',next:ex.next||TODAY,st:'Needs review',aud:[ts+' · Created by voice',...(vs.audit||[]).map(a=>ts+' · '+a)]};
+ if(!online){if(!S.settings.offlineDrafts){toast('Offline drafts are turned off in Settings');return}S.drafts.push(rec);vs.st='draft';say('You are offline. Saved as a draft. It will sync when you reconnect.');save();toast('Saved as offline draft');return render()}
+ apply(rec,ex);vs.st='saved';say(`Saved visit ${id}.`);toast('Visit saved');render()}
+function apply(rec,ex){S.visits.push(rec);const b=ben(rec.b);if(b){b.w.push(rec.w);if(ex&&ex.next){b.next=ex.next}}
+ if(rec.next&&rec.next!==TODAY&&!S.fu.some(f=>f.b==rec.b&&f.date==rec.next))S.fu.push({id:Date.now()+Math.random(),b:rec.b,date:rec.next,st:'Pending'});
+ if(ex)ex.danger.forEach(d=>S.alerts.push({id:Date.now()+Math.random(),v:rec.id,b:rec.b,rule:d.id,sign:d.sign,ack:false,ref:false,ts:rec.aud[0].split(' · ')[0]}));save()}
+function sync(){if(!S.drafts.length)return;const n=S.drafts.length;S.drafts.forEach(r=>{if(!S.visits.some(v=>v.b==r.b&&v.date==r.date&&v.w==r.w))apply(r,{next:r.next,danger:dangerScan('')})});S.drafts=[];save();toast(`Reconnected. ${n} draft(s) synced.`)}
+
+/* ---------- actions ---------- */
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act],#mic');if(!el)return;const a=el.dataset.act||'mic',id=el.dataset.id;
+ if(a=='mic'){if(gn.stt){vs.st=='listening'?stopMic():startMic('main')}else if(vs.st=='listening'){clearInterval(seedTimer);vs.st='idle';render()}else toast('Gnani is not connected. Use a sample below.');return}
+ if(a=='say'){runSample(el.dataset.k)}
+ else if(a=='corrmic'){vs.st=='listening'?stopMic():startMic('corr')}
+ else if(a=='speak'){speakRecord()}
+ else if(a=='snd'){S.settings.sound=!sndOn();if(!sndOn()){alarmStop();try{speechSynthesis.cancel()}catch(e){}}save();unlockAudio();toast(sndOn()?'Alert sound on':'Alert sound off');paintSnd()}
+ else if(a=='tsnd'){unlockAudio();setTimeout(()=>alarmStart(3000),150)}
+ else if(a=='nperm'){if(!window.Notification)toast('This browser does not support desktop notifications');else Notification.requestPermission().then(p=>toast(p=='granted'?'Desktop notifications allowed':'Notifications were not allowed'))}
+ else if(a=='lvx'){LV.splice(+el.dataset.i,1);paintLive()}
+ else if(a=='lvack'){const x=LV[+el.dataset.i],al=x&&S.alerts.find(z=>z.id==x.id);if(al){al.ack=true;save();toast('Alert acknowledged. Referral not yet confirmed.');render()}}
+ else if(a=='lvopen'){go('alerts')}
+ else if(a=='lvmute'){alarmStop();try{speechSynthesis.cancel()}catch(e){}toast('Alarm silenced. The alert stays until you acknowledge it.')}
+ else if(a=='rdis'){RA=RA.filter(x=>x.id!=id);render()}
+ else if(a=='net'){setNet(!online)}
+ else if(a=='theme'){const d=document.documentElement,n=d.dataset.theme=='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('sqt',n)}catch(e){}}
+ else if(a=='bell'){const al=S.alerts.filter(x=>!x.ack),od=overdue(),it=[...al.map(x=>`<p><b style="color:var(--red)">Danger sign:</b> ${x.sign} (ID ${x.b})</p>`),...od.map(f=>`<p>Overdue follow-up: ${esc(ben(f.b).name)} (${fmt(f.date)})</p>`),...(S.drafts.length?[`<p>${S.drafts.length} offline draft(s) waiting to sync</p>`]:[])];ask('Notifications',it.join('')||'<p class="mu">You are all caught up.</p>','Close',()=>true);$('#dn').remove()}
+ else if(a=='retry'||a=='new'){clearInterval(seedTimer);vs={st:'idle',tx:'',ex:null,log:[],lang:vs.lang};render()}
+ else if(a=='corr'){correct($('#corr').value)}
+ else if(a=='corrs'){correct('No, 46')}
+ else if(a=='confirm'){const ex=vs.ex;ask('Confirm this record?',`Beneficiary ${ex.id}, ${ex.w} kg, next visit ${ex.next?fmt(ex.next):'not set'}. Saving cannot be undone from here.`,'Yes, save',()=>commit())}
+ else if(a=='done'){const f=S.fu.find(x=>x.id==id),b=ben(f.b);ask('Mark visit completed?',`Confirm you visited ${esc(b.name)} (ID ${b.id}).`,'Yes, completed',()=>{f.st='Completed';save();toast('Follow-up marked completed');render()})}
+ else if(a=='resch'){const f=S.fu.find(x=>x.id==id);ask('Reschedule follow-up',`<input type="date" id="nd" value="${f.date}" min="${TODAY}">`,'Save date',d=>{const v=d.querySelector('#nd').value;if(!v||v<TODAY){toast('Pick today or a later date');return false}f.date=v;save();toast('Follow-up rescheduled');render()})}
+ else if(a=='tab'){filt.fu=el.dataset.k;render()}
+ else if(a=='ack'){const x=S.alerts.find(z=>z.id==id);x.ack=true;save();toast('Alert acknowledged. Referral not yet confirmed.');render()}
+ else if(a=='ref'){const x=S.alerts.find(z=>z.id==id);ask('Referral made?',`Only confirm if you have actually referred beneficiary ${x.b} to the PHC.`,'Yes, referred',()=>{x.ref=true;save();toast('Referral recorded');render()})}
+ else if(a=='prof'){const b=ben(id),vv=S.visits.filter(v=>v.b==id);ask(esc(b.name),`<p class="mu">ID ${b.id} · ${b.age} · ${esc(b.hh)}</p><p><b>Weights:</b> ${b.w.join(' → ')} kg</p>${spark(b.w)}<p><b>Next visit:</b> ${fmt(b.next)}</p><p><b>Vaccination:</b> ${b.vacc}</p><p><b>Visits:</b> ${vv.map(v=>v.id+' ('+fmt(v.date)+')').join(', ')||'None yet'}</p>`,'Close',()=>true);$('#dn').remove()}
+ else if(a=='vis'){const v=S.visits.find(x=>x.id==id);ask('Visit '+v.id,`<dl class="kv"><dt>Beneficiary</dt><dd>${v.b}</dd><dt>Date</dt><dd>${fmt(v.date)}</dd><dt>Weight</dt><dd>${v.w} kg</dd><dt>Vaccine due</dt><dd>${esc(v.vacc)}</dd><dt>Next visit</dt><dd>${fmt(v.next)}</dd><dt>Status</dt><dd>${v.st}</dd></dl><h4 style="margin:12px 0 4px">Audit history</h4>${v.aud.map(x=>`<p class="mu">${esc(x)}</p>`).join('')}`,v.st=='Reviewed'?'Close':'Mark reviewed',()=>{if(v.st!='Reviewed'){v.st='Reviewed';v.aud.push('11 Nov · Reviewed');const b=ben(v.b);if(b)b.st='Reviewed';save();toast('Record marked reviewed');render()}return true})}
+ else if(a=='saveset'){const s=S.settings;s.name=$('#sn').value||s.name;s.lang=$('#sl').value;document.querySelectorAll('[data-k]').forEach(i=>{if(i.type=='checkbox')s[i.dataset.k]=i.checked});save();toast('Settings saved')}
+ else if(a=='export'){const rows=['visit_id,beneficiary_id,date,type,weight_kg,vaccinations_due,next_visit,status',...S.visits.map(v=>[v.id,v.b,v.date,v.type,v.w,'"'+v.vacc+'"',v.next,v.st].join(','))];const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));l.download='swastiq-register.csv';l.click();toast('Register exported')}
+ else if(a=='wipe'){ask('Delete all data?','This removes all records from this device and restores the demo data.','Delete',()=>{fetch('/api/state',{method:'DELETE',headers:{'X-Device-Id':DID}}).catch(()=>{});S=seed();save();toast('Data deleted. Demo data restored.');render()})}});
+document.addEventListener('input',e=>{if(e.target.id=='q'){filt.q=e.target.value;const p=e.target.selectionStart;render();const q=$('#q');q.focus();q.setSelectionRange(p,p)}});
+document.addEventListener('change',e=>{if(e.target.id=='sv'||e.target.id=='ss'){S.settings.vol=+$('#sv').value;S.settings.style=$('#ss').value;save();unlockAudio();alarmStop();setTimeout(()=>alarmStart(1200),120)}if(e.target.id=='vlang'){vs.lang=e.target.value;toast('Language: '+vs.lang)}});
+function setNet(o){online=o;toast(o?'Back online. Updating the server…':'You are offline. Everything is saved on this device and will upload when you reconnect.');if(o){sync();initCloud();connectAlerts()}render()}
+addEventListener('online',()=>setNet(true));addEventListener('offline',()=>setNet(false));
+/* offline toggle for demos */
+try{document.documentElement.dataset.theme=localStorage.getItem('sqt')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}
+/* ---------- live voice: browser mic -> our backend -> Gnani Prisma v3.0 ---------- */
+const LC={'Auto Detect':'indic-auto',Tamil:'ta-IN',Hindi:'hi-IN',Telugu:'te-IN',Kannada:'kn-IN',Malayalam:'ml-IN',Bengali:'bn-IN',Marathi:'mr-IN',Gujarati:'gu-IN',English:'en-IN'};
+let ws,ac,node,mst,tick,autoT,segs=[],pcm=[],mode='main',heard=false,lastV=0,t0=0;
+const liveTx=()=>{const el=$('#log');if(el)el.innerHTML=`<div class="bub u">${esc(vs.tx)}</div>`};
+function teardown(){clearInterval(tick);clearTimeout(autoT);try{mst&&mst.getTracks().forEach(t=>t.stop());node&&node.disconnect();ac&&ac.close()}catch(e){}}
+function wav(a){const n=a.length,b=new DataView(new ArrayBuffer(44+n*2)),w=(o,t)=>[...t].forEach((c,k)=>b.setUint8(o+k,c.charCodeAt(0)));w(0,'RIFF');b.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');b.setUint32(16,16,true);b.setUint16(20,1,true);b.setUint16(22,1,true);b.setUint32(24,16000,true);b.setUint32(28,32000,true);b.setUint16(32,2,true);b.setUint16(34,16,true);w(36,'data');b.setUint32(40,n*2,true);for(let k=0;k<n;k++)b.setInt16(44+k*2,a[k],true);return b.buffer}
+async function startMic(m){mode=m;
+ try{mst=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true}})}catch(e){toast('Microphone blocked. Allow microphone access in your browser settings.');return}
+ segs=[];pcm=[];heard=false;lastV=0;t0=Date.now();if(m=='main'){vs.tx='';vs.ex=null;vs.log=[]}
+ vs.st='listening';render();
+ ac=new AudioContext();const src=ac.createMediaStreamSource(mst);node=ac.createScriptProcessor(4096,1,1);const ratio=ac.sampleRate/16000;
+ node.onaudioprocess=ev=>{const d=ev.inputBuffer.getChannelData(0);let e=0;for(let i=0;i<d.length;i++)e+=d[i]*d[i];if(Math.sqrt(e/d.length)>.02){heard=true;lastV=Date.now()}for(let i=0;i<d.length;i+=ratio){const v=Math.max(-1,Math.min(1,d[Math.floor(i)]));pcm.push(v<0?v*32768:v*32767)}};
+ src.connect(node);node.connect(ac.destination);
+ tick=setInterval(()=>{const n=Date.now();if((heard&&n-lastV>1800)||(!heard&&n-t0>8000)||n-t0>28000)stopMic()},200)}   /* Gnani REST accepts up to 30 s per clip */
+async function stopMic(){if(vs.st!='listening')return;teardown();vs.st='transcribing';render();let t='';
+ try{if(heard){const r=await fetch('/api/stt?lang='+encodeURIComponent(LC[vs.lang]||'indic-auto'),{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:wav(pcm)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'request failed');t=(j.transcript||'').trim()}}
+ catch(e){toast('Voice service: '+e.message);vs.st='clarify';say('The voice service reported a problem. Please try again.');return render()}
+ if(mode=='corr'){correct(t);return}
+ vs.tx=t;if(!t){vs.st='clarify';say('I did not hear anything. Tap the microphone and try again.');return render()}
+ vs.st='understanding';render();setTimeout(finish,400)}
+async function speakRecord(){const ex=vs.ex;if(!ex||!gn.tts||!ex.id)return;const dg=x=>String(x).split('').join(' ');
+ const t=`Beneficiary ${dg(ex.id)}. ${ex.w!=null?'Weight '+ex.w+' kilograms. ':''}${ex.next?'Next visit '+fmt(ex.next)+'. ':''}Is this correct?`;
+ try{const r=await fetch('/api/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,language:'auto'})});if(!r.ok)throw 0;const u=URL.createObjectURL(await r.blob());const a=new Audio(u);a.onended=()=>URL.revokeObjectURL(u);await a.play()}catch(e){toast('Read-back is unavailable right now.')}}
+/* ---------- live alerts: on-page card + sound + spoken alert (real events only) ----------
+   An alert exists only when (a) the rule engine matched a danger sign in a saved visit on this device, or
+   (b) the server pushed one that another device really saved. Nothing here generates alerts by itself. */
+let AC2=null,nagged=false,unlocked=false,LV=[],RA=[],liveOK=false,aw,awN=0,flT=null;const T0=document.title;
+const sndOn=()=>S.settings.sound!==false;
+function paintSnd(){const b=$('#sndb');if(!b)return;const on=sndOn();b.style.color=!on?'var(--mu)':unlocked?'var(--ok)':'var(--amb)';b.style.opacity=on?1:.55;const t=!on?'Alert sound off. Tap to turn on':unlocked?'Alert sound on. Tap to mute':'Tap anywhere to allow alert sound';b.title=t;b.setAttribute('aria-label',t)}
+function unlockAudio(){try{AC2=AC2||new(window.AudioContext||window.webkitAudioContext)();AC2.resume().then(()=>{const u=AC2.state=='running';if(u!==unlocked){unlocked=u;paintSnd();paintLive()}if(u&&!nagged){nagged=true;const p=S.alerts.filter(a=>!a.ack);if(p.length&&sndOn()){p.forEach(a=>{if(!LV.some(x=>x.id==a.id))LV.push({...a})});fireAlerts(p)}}})}catch(e){}}
+['pointerdown','keydown','touchstart'].forEach(ev=>addEventListener(ev,unlockAudio,{passive:true}));
+/* Alarm: a soft repeating chime until the alert is acknowledged or silenced.
+   To use a recorded alarm, put a file named alarm.mp3 next to index.html (it loops). */
+let alarm=null,alarmFile=false;
+fetch('alarm.mp3',{method:'HEAD'}).then(r=>{alarmFile=r.ok}).catch(()=>{});
+const SND={soft:[659.25,880],bell:[523.25,783.99],pulse:[440,554.37]},sndVol=()=>(S.settings.vol??40)/100,sndFs=()=>SND[S.settings.style]||SND.soft,GAP=4.5;
+function chime(c,dest,fs,t0){fs.forEach((f,i)=>{const t=t0+i*.35;[[1,1],[2,.12]].forEach(([m,a])=>{const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f*m;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+.06);g.gain.exponentialRampToValueAtTime(.0005,t+1.8);o.connect(g);g.connect(dest);o.start(t);o.stop(t+1.9)})})}
+function chimeWav(){const sr=22050,n=Math.floor(sr*GAP),b=new DataView(new ArrayBuffer(44+n*2)),w=(o,t)=>[...t].forEach((c,k)=>b.setUint8(o+k,c.charCodeAt(0)));
+ w(0,'RIFF');b.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');b.setUint32(16,16,true);b.setUint16(20,1,true);b.setUint16(22,1,true);b.setUint32(24,sr,true);b.setUint32(28,sr*2,true);b.setUint16(32,2,true);b.setUint16(34,16,true);w(36,'data');b.setUint32(40,n*2,true);
+ const fs=sndFs();for(let k=0;k<n;k++){const t=k/sr;let v=0;fs.forEach((f,i)=>{const u=t-i*.35;if(u>0&&u<1.8)v+=Math.sin(2*Math.PI*f*u)*Math.min(1,u/.06)*Math.exp(-u*3)});b.setInt16(44+k*2,Math.max(-1,Math.min(1,v*.4))*32767,true)}
+ return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
+function alarmStart(ms){if(alarm)return;let h;
+ const el=src=>{const a=new Audio(src);a.loop=true;a.volume=Math.max(.1,sndVol());a.play().catch(()=>toast('Sound is blocked. Tap the page once, then try again.'));return{stop(){a.pause()},duck(d){a.volume=d?.08:Math.max(.1,sndVol())}}};
+ if(alarmFile)h=el('alarm.mp3');
+ else if(AC2&&AC2.state=='running'){try{const g=AC2.createGain(),base=()=>sndVol()*.35;g.gain.value=base();g.connect(AC2.destination);
+  const ring=()=>chime(AC2,g,sndFs(),AC2.currentTime+.05);ring();const iv=setInterval(ring,GAP*1000);
+  h={stop(){clearInterval(iv);g.gain.setTargetAtTime(0,AC2.currentTime,.15);setTimeout(()=>g.disconnect(),900)},duck(d){g.gain.setTargetAtTime(d?base()*.25:base(),AC2.currentTime,.1)}}}catch(e){}}
+ if(!h)h=el(chimeWav());
+ alarm=h;alarm.t=setTimeout(alarmStop,ms||180000)}
+function alarmStop(){if(!alarm)return;clearTimeout(alarm.t);try{alarm.stop()}catch(e){}alarm=null}
+async function speakAlert(a){const t=`Danger sign. ${a.sign}. Beneficiary ${String(a.b).split('').join(' ')}. Refer to the PHC immediately.`;
+ const done=()=>{alarm&&alarm.duck(false)};alarm&&alarm.duck(true);setTimeout(done,15000);
+ if(gn.tts){try{const r=await fetch('/api/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,language:'auto'})});if(r.ok){const u=URL.createObjectURL(await r.blob()),au=new Audio(u);au.onended=()=>{URL.revokeObjectURL(u);done()};au.onerror=done;await au.play();return}}catch(e){}}
+ try{const m=new SpeechSynthesisUtterance(t);m.lang='en-IN';m.rate=.92;m.volume=.8;m.onend=done;m.onerror=done;speechSynthesis.speak(m)}catch(e){done()}}
+function flash(){if(flT)return;let on=0;flT=setInterval(()=>{if(!LV.length){clearInterval(flT);flT=null;document.title=T0;return}on=!on;document.title=on?'⚠ DANGER SIGN – SwastiQ':T0},1800)}
+function paintLive(){const el=$('#live');if(!el)return;LV=LV.filter(x=>x.remote?RA.includes(x):S.alerts.some(a=>a.id==x.id&&!a.ack));if(!LV.length)alarmStop();
+ const h=LV.map((x,i)=>`<div class="alertbar" role="alert"><div class="row sp"><h3>${x.remote?'Alert from '+esc(x.worker||'another worker'):'New danger sign'}</h3><button class="ib" data-act="lvx" data-i="${i}" aria-label="Dismiss" style="width:36px;height:36px">✕</button></div><p><b>${esc(x.sign)}</b></p><p class="mu">Beneficiary ${esc(x.b)} · Visit ${esc(x.v)} · Rule ${esc(x.rule)}</p><p><b>Refer to the PHC immediately.</b></p>${!unlocked&&sndOn()?'<p class="mu">Sound is blocked by the browser. Tap anywhere once to enable it.</p>':''}<div class="row" style="margin-top:8px">${x.remote?'':`<button class="btn red sm" data-act="lvack" data-i="${i}">I have seen this</button>`}<button class="btn alt sm" data-act="lvmute">Silence alarm</button><button class="btn alt sm" data-act="lvopen">Open alerts</button></div></div>`).join('');if(el._h===h)return;el._h=h;el.innerHTML=h}   /* redraw only on change, or taps get lost between mousedown and mouseup */
+function fireAlerts(list){const a=list[list.length-1];paintLive();flash();
+ try{navigator.vibrate&&navigator.vibrate([200,120,200])}catch(e){}
+ if(document.hidden&&S.settings.notif&&window.Notification&&Notification.permission=='granted'){try{new Notification('SwastiQ: danger sign',{body:`${a.sign} · Beneficiary ${a.b}. Refer to the PHC immediately.`,tag:'sq-alert',requireInteraction:true})}catch(e){}}
+ if(!sndOn())return;alarmStart();setTimeout(()=>speakAlert(a),2500)}
+let seen;try{seen=JSON.parse(localStorage.getItem('sqseen')||'null')||S.alerts.map(a=>a.id)}catch(e){seen=S.alerts.map(a=>a.id)}   /* plain array: the app's own Set() view function shadows the built-in Set */
+function checkAlerts(){const fresh=S.alerts.filter(a=>!a.ack&&!seen.includes(a.id));S.alerts.forEach(a=>{if(!seen.includes(a.id))seen.push(a.id)});try{localStorage.setItem('sqseen',JSON.stringify(seen))}catch(e){}
+ if(fresh.length){LV.push(...fresh.map(a=>({...a})));fireAlerts(fresh)}}
+function connectAlerts(){if(gn.alerts===false||!online||(aw&&aw.readyState<2))return;try{aw=new WebSocket(`${location.protocol=='https:'?'wss':'ws'}://${location.host}/ws/alerts?device=${encodeURIComponent(DID)}`)}catch(e){return}
+ aw.onopen=()=>{liveOK=true;awN=0;paintStatus()};
+ aw.onmessage=e=>{let x;try{x=JSON.parse(e.data)}catch(_){return}if(x.type!='alert'||!x.alert)return;const it={...x.alert,id:'r'+x.alert.id,remote:true,worker:x.worker};if(RA.some(r=>r.id==it.id))return;RA.unshift(it);LV.push(it);fireAlerts([it]);if(route()!='voice')render()};
+ aw.onclose=()=>{liveOK=false;paintStatus();setTimeout(connectAlerts,Math.min(30000,1000*2**awN++))};aw.onerror=()=>{}}
+setInterval(()=>{try{aw&&aw.readyState==1&&aw.send('ping')}catch(e){}},25000);
+connectAlerts();
+setInterval(()=>{if(online&&(S._dirty||!srv))initCloud()},15000);
+initCloud();
+render();
+</script>
+
+</body></html>
